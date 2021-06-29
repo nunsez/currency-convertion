@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import getRates from "../utils/rates";
+import { getDaily } from "../utils/rates";
 
-import { IRates } from '../interfaces';
+import { IDaily } from '../interfaces';
 import { Table } from "react-bootstrap";
 
 interface IProps {
-    valutes: IRates["Valute"];
+    valutes: IDaily["Valute"];
 }
 
 const TableOfRates = ({ valutes }: IProps) => {
@@ -37,24 +37,15 @@ const TableOfRates = ({ valutes }: IProps) => {
                                 <td>{diff}</td>
                             </tr>
                         );
-
                     })}
                 </tbody>
             </Table>
         </div>
     );
-
-    // return (
-    //     <ul>
-    //         {display.map((el) => {
-    //             return <li key={el}>{el}</li>;
-    //         })}
-    //     </ul>
-    // );
 };
 
 const Rates = () => {
-    const defaultRates: IRates = {
+    const defaultDaily: IDaily = {
         Date: '',
         PreviousDate: '',
         PreviousURL: '',
@@ -62,21 +53,21 @@ const Rates = () => {
         Valute: {},
     };
 
-    const [rates, setRates] = useState(defaultRates);
+    const [daily, setDaily] = useState(defaultDaily);
 
-    const { Valute: valutes, Timestamp: dateStr } = rates;
+    const { Valute: valutes, Timestamp: dateStr } = daily;
 
     const date = new Date(dateStr);
 
     const valutesList = Object.keys(valutes).concat('RUB').sort();
 
-    const getRatesHanle = async () => {
-        const data = await getRates();
-        setRates(data);
+    const ratesHanle = async () => {
+        const data: IDaily = await getDaily();
+        setDaily(data);
     };
 
     useEffect(() => {
-        getRatesHanle();
+        ratesHanle();
     }, []);
 
     return (

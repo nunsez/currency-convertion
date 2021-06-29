@@ -1,13 +1,25 @@
 import axios from "axios";
 
-import { IRates } from "../interfaces";
+import { IDaily, IRates } from "../interfaces";
 
-const ratesURL = 'https://www.cbr-xml-daily.ru/daily_json.js';
+const dailyURL = 'https://www.cbr-xml-daily.ru/daily_json.js';
 
-const getRates = async (): Promise<IRates> => {
-    const response = await axios.get(ratesURL);
+const ratesURL = 'https://www.cbr-xml-daily.ru/latest.js';
+
+const URLMap: { [key: string]: string } = {
+    daily: dailyURL,
+    rates: ratesURL,
+};
+
+const getData = async (opt: string) => {
+    const response = await axios.get(URLMap[opt]);
 
     return response.data;
 };
 
-export default getRates;
+const getRates = (): Promise<IRates> => getData('rates');
+
+const getDaily = (): Promise<IDaily> => getData('daily');
+
+
+export { getRates, getDaily };

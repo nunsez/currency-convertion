@@ -9,6 +9,13 @@ export interface IValute {
 }
 
 export interface IRates {
+    base: string;
+    rates: {
+        [key: string]: number;
+    }
+}
+
+export interface IDaily {
     Date: string;
     PreviousDate: string;
     PreviousURL: string;
