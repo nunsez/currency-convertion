@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { IRates } from "../interfaces";
 import { getRates } from "../utils/rates";
 
 const fetchRates = createAsyncThunk('ratesInfo/fetchRates', async () => {
@@ -7,20 +8,25 @@ const fetchRates = createAsyncThunk('ratesInfo/fetchRates', async () => {
     return rates;
 })
 
+const initialState: IRates = {
+    base: '',
+    rates: {},
+};
+
 const ratesSlice = createSlice({
     name: 'ratesInfo',
-    initialState: {},
+    initialState,
     reducers: {
     },
     extraReducers: (builder) => {
         builder.addCase(fetchRates.fulfilled, (state, { payload }) => {
-            state = payload;
+            Object.keys(payload).forEach((key) => state[key] = payload[key]);
         })
     },
 });
 
 const { actions, reducer } = ratesSlice;
 
-export { actions };
+export { actions, fetchRates };
 
 export default reducer;

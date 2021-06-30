@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { getDaily } from '../utils/rates';
+import React, { useEffect } from 'react';
 import { fetchDaily } from '../slices/daily';
 
 import { IDaily } from '../interfaces';
 import { Table } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import * as selectors from '../selectors';
+
 
 interface IProps {
-    valutes: IDaily["Valute"];
+    valutes: IDaily['Valute'];
 }
 
 const TableOfRates = ({ valutes }: IProps) => {
@@ -48,19 +49,10 @@ const TableOfRates = ({ valutes }: IProps) => {
 
 const Rates = () => {
     const dispatch = useDispatch();
-    const defaultDaily: IDaily = {
-        Date: '',
-        PreviousDate: '',
-        PreviousURL: '',
-        Timestamp: '',
-        Valute: {},
-    };
+    const valutes = useSelector(selectors.valutesSelector);
+    const timestamp = useSelector(selectors.dailyTimestampSelector);
 
-    const [daily, setDaily] = useState(defaultDaily);
-
-    const { Valute: valutes, Timestamp: dateStr } = daily;
-
-    const date = new Date(dateStr);
+    const date = new Date(timestamp);
 
     const valutesList = Object.keys(valutes).concat('RUB').sort();
 

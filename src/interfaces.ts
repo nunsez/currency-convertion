@@ -12,7 +12,8 @@ export interface IRates {
     base: string;
     rates: {
         [key: string]: number;
-    }
+    };
+    [key: string]: string | IRates['rates'];
 }
 
 export interface IDaily {
@@ -23,5 +24,5 @@ export interface IDaily {
     Valute: {
         [key: string]: IValute;
     };
-    [key: string]: string | object;
+    [key: string]: string | IDaily['Valute'];
 }

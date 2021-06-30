@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './slices';
 
+
 const store = configureStore({
     reducer: rootReducer,
 })
