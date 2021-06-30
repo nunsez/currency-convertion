@@ -26,3 +26,10 @@ export interface IDaily {
     };
     [key: string]: string | IDaily['Valute'];
 }
+
+export interface IConverter {
+    amount: string;
+    from: string;
+    to: string;
+    [key: string]: string;
+}

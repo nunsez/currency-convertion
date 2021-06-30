@@ -20,7 +20,10 @@ const ratesSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchRates.fulfilled, (state, { payload }) => {
+            const { base } = payload;
+
             Object.keys(payload).forEach((key) => state[key] = payload[key]);
+            state.rates[base] = 1;
         })
     },
 });

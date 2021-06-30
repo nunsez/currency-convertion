@@ -28,7 +28,9 @@ const dailySlice = createSlice({
     },
 });
 
-const { actions, reducer } = dailySlice;
+const { reducer } = dailySlice;
+
+const actions = { ...dailySlice.actions, fetchDaily };
 
 export { actions, fetchDaily };
 

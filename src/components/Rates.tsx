@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { fetchDaily } from '../slices/daily';
+import { actions as dailyActions } from '../slices/daily';
 
 import { IDaily } from '../interfaces';
 import { Table } from 'react-bootstrap';
@@ -53,7 +53,7 @@ const Rates = () => {
     const valutesList = Object.keys(valutes).concat('RUB').sort();
 
     useEffect(() => {
-        dispatch(fetchDaily());
+        dispatch(dailyActions.fetchDaily());
     }, []);
 
     return (

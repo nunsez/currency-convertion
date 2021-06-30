@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import fx from 'money';
-import { Form } from "react-bootstrap";
+import React, { SyntheticEvent, useEffect } from "react";
+import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRates } from "../slices/rates";
 import * as selectors from '../selectors';
-import { IRates } from '../interfaces';
+import { IConverter, IRates } from '../interfaces';
+import { actions as converterActions } from "../slices/converter";
 
 const getOptionsForValuteSelect = (rates: IRates['rates']) => {
     const valutes = Object.keys(rates);
@@ -12,38 +12,69 @@ const getOptionsForValuteSelect = (rates: IRates['rates']) => {
     return valutes.map((valute) => <option key={valute}>{valute}</option>);
 };
 
-const ConverterForm = ({ rates }: { rates: IRates }) => {
-    fx.base = rates.base;
-    fx.rates = rates.rates;
+interface IProps {
+    rates: IRates;
+    onChange: any;
+}
 
-    const convertHandle = (e: React.SyntheticEvent) => {
+const ConverterForm = ({ rates, onChange }: IProps) => {
+    const values = useSelector(selectors.getConverterValues);
+
+    const convert = ({ amount, from, to }: IConverter) => {
+        let value: string | number = amount;
+        value = amount.replaceAll(/[^0-9]/g, '');
+        value = Number(value);
+
+        const a = from === rates.base ? 1 : rates.rates[from];
+        const b = to === rates.base ? 1 : rates.rates[to];
+        const result = a / b * value;
+
+        return result.toFixed(2);
+    };
+
+    const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
 
-        const result = fx(16288).from("USD").to("GBP");
+        const result = convert(values);
         console.log(result);
     };
 
     return (
-        <Form className="d-flex justify-content-between">
+        <Form noValidate onSubmit={handleSubmit} className="d-flex justify-content-between">
             <Form.Group className="mx-2 w-25">
                 <Form.Label>Amount</Form.Label>
-                <Form.Control type="text" />
+                <Form.Control
+                    type="number"
+                    name="amount"
+                    value={values.amount}
+                    onChange={onChange}
+                />
             </Form.Group>
 
             <Form.Group className="mx-2 w-25">
                 <Form.Label>From</Form.Label>
-                <Form.Control as="select">
+                <Form.Control
+                    as="select"
+                    value={values.from}
+                    onChange={onChange}
+                    name="from"
+                >
                     {getOptionsForValuteSelect(rates.rates)}
                 </Form.Control>
             </Form.Group>
 
             <Form.Group className="mx-2 w-25">
                 <Form.Label>To</Form.Label>
-                <Form.Control as="select">
+                <Form.Control
+                    as="select"
+                    name="to"
+                    value={values.to}
+                    onChange={onChange}
+                >
                     {getOptionsForValuteSelect(rates.rates)}
                 </Form.Control>
             </Form.Group>
-            <button onClick={convertHandle}>press me</button>
+            <Button type="submit" className="mt-auto">Convert</Button>
         </Form>
     );
 };
@@ -52,8 +83,11 @@ const Converter = () => {
     const dispatch = useDispatch();
 
     const rates = useSelector(selectors.ratesSelector);
-    console.log(rates);
-    //const base = useSelector(selectors.baseSelector);
+
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        dispatch(converterActions.setConverterValue({ name, value }));
+    };
 
     useEffect(() => {
         dispatch(fetchRates());
@@ -62,7 +96,7 @@ const Converter = () => {
     return (
         <React.Fragment>
             <h1 className="text-center">Converter Page</h1>
-            <ConverterForm rates={rates} />
+            <ConverterForm rates={rates} onChange={handleChange} />
         </React.Fragment>
     );
 };

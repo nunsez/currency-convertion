@@ -1,15 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    amount: 0,
+import { IConverter } from "../interfaces";
+
+const initialState: IConverter = {
+    amount: '0',
     from: 'RUB',
-    to: '',
+    to: 'USD',
 };
 
 const converterInfo = createSlice({
     name: 'converterInfo',
     initialState,
     reducers: {
+        setConverterValue: (state, { payload }) => {
+            const { name, value } = payload;
+            state[name] = value;
+        },
     },
 });
 
