@@ -1,7 +1,8 @@
 import { IDaily, IRates } from "../interfaces";
+import { RootState } from '../store';
 
-export const valutesSelector = (state: any): IDaily['Valute'] => state.dailyInfo.Valute;
+export const valutesSelector = (state: RootState): IDaily['Valute'] => state.dailyInfo.Valute;
 
-export const dailyTimestampSelector = (state: any): IDaily['Timestamp'] => state.dailyInfo.Timestamp;
+export const dailyTimestampSelector = (state: RootState): IDaily['Timestamp'] => state.dailyInfo.Timestamp;
 
-export const ratesSelector = (state: any): IRates => state.ratesInfo;
+export const ratesSelector = (state: RootState): IRates => state.ratesInfo;

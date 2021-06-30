@@ -5,13 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from './slices';
-
-
-const store = configureStore({
-    reducer: rootReducer,
-})
+import store from './store';
 
 ReactDOM.render(
     <React.StrictMode>
