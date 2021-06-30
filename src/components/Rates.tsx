@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { getDaily } from "../utils/rates";
+import React, { useEffect, useState } from 'react';
+import { getDaily } from '../utils/rates';
+import { fetchDaily } from '../slices/daily';
 
 import { IDaily } from '../interfaces';
-import { Table } from "react-bootstrap";
+import { Table } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 
 interface IProps {
     valutes: IDaily["Valute"];
@@ -45,6 +47,7 @@ const TableOfRates = ({ valutes }: IProps) => {
 };
 
 const Rates = () => {
+    const dispatch = useDispatch();
     const defaultDaily: IDaily = {
         Date: '',
         PreviousDate: '',
@@ -61,13 +64,8 @@ const Rates = () => {
 
     const valutesList = Object.keys(valutes).concat('RUB').sort();
 
-    const ratesHanle = async () => {
-        const data: IDaily = await getDaily();
-        setDaily(data);
-    };
-
     useEffect(() => {
-        ratesHanle();
+        dispatch(fetchDaily());
     }, []);
 
     return (

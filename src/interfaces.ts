@@ -22,5 +22,6 @@ export interface IDaily {
     Timestamp: string;
     Valute: {
         [key: string]: IValute;
-    }
+    };
+    [key: string]: string | object;
 }
