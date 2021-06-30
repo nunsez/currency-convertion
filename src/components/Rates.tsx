@@ -7,11 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as selectors from '../selectors';
 
 
-interface IProps {
-    valutes: IDaily['Valute'];
-}
-
-const TableOfRates = ({ valutes }: IProps) => {
+const TableOfRates = ({ valutes }: { valutes: IDaily['Valute'] }) => {
     const keys = Object.keys(valutes);
 
     return (
