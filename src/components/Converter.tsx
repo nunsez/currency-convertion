@@ -1,7 +1,6 @@
 import React, { SyntheticEvent, useEffect } from "react";
 import { Form, Button, Image } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRates } from "../slices/rates";
 import * as selectors from '../selectors';
 import { IConverter, IRates } from '../interfaces';
 import { actions as converterActions } from "../slices/converter";
@@ -16,12 +15,13 @@ const getOptionsForValuteSelect = (rates: IRates['rates']) => {
 };
 
 interface IProps {
-    rates: IRates;
+    base: IConverter['base'];
+    rates: IConverter['rates'];
     onChange: (e: any) => void;
     onSwap: () => void;
 }
 
-const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
+const ConverterForm = ({ base, rates, onChange, onSwap }: IProps) => {
     const [result, setResult] = useState('0');
     const values = useSelector(selectors.getConverterValues);
 
@@ -30,8 +30,8 @@ const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
         value = amount.replaceAll(/[^0-9]/g, '');
         value = Number(value);
 
-        const a = from === rates.base ? 1 : rates.rates[from];
-        const b = to === rates.base ? 1 : rates.rates[to];
+        const a = from === base ? 1 : rates[from];
+        const b = to === base ? 1 : rates[to];
         const answer = (b / a) * value;
 
         return answer.toFixed(2);
@@ -64,7 +64,7 @@ const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
                         onChange={onChange}
                         name="from"
                     >
-                        {getOptionsForValuteSelect(rates.rates)}
+                        {getOptionsForValuteSelect(rates)}
                     </Form.Control>
                 </Form.Group>
 
@@ -93,7 +93,7 @@ const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
                         value={values.to}
                         onChange={onChange}
                     >
-                        {getOptionsForValuteSelect(rates.rates)}
+                        {getOptionsForValuteSelect(rates)}
                     </Form.Control>
                 </Form.Group>
                 <Button type="submit" variant="info" className="mt-auto">Convert</Button>
@@ -109,25 +109,25 @@ const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
 const Converter = () => {
     const dispatch = useDispatch();
 
-    const rates = useSelector(selectors.ratesSelector);
+    const { rates, base } = useSelector(selectors.getConverterValues);
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
-        dispatch(converterActions.setConverterValue({ name, value }));
+        dispatch(converterActions.setValue({ name, value }));
     };
 
     const handleSwapCurrencies = () => {
-        dispatch(converterActions.swapConverterCurrencies());
+        dispatch(converterActions.swapCurrencies());
     };
 
     useEffect(() => {
-        dispatch(fetchRates());
+        dispatch(converterActions.fetchRates());
     }, []);
 
     return (
         <React.Fragment>
             <h1 className="text-center">Converter Page</h1>
-            <ConverterForm rates={rates} onChange={handleChange} onSwap={handleSwapCurrencies} />
+            <ConverterForm base={base} rates={rates} onChange={handleChange} onSwap={handleSwapCurrencies} />
         </React.Fragment>
     );
 };

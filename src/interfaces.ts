@@ -27,9 +27,9 @@ export interface IDaily {
     [key: string]: string | IDaily['Valute'];
 }
 
-export interface IConverter {
+export interface IConverter extends IRates {
     amount: string;
     from: string;
     to: string;
-    [key: string]: string;
+    result: string;
 }
