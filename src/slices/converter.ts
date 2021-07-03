@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IConverter } from "../interfaces";
 import { getRates } from "../utils/rates";
+import converter from "../utils/converter";
 
 const fetchRates = createAsyncThunk('ratesInfo/fetchRates', async () => {
     const rates = await getRates();
@@ -24,11 +25,16 @@ const converterInfo = createSlice({
         setValue: (state, { payload }) => {
             const { name, value } = payload;
             state[name] = value;
+
+            state.result = converter.amount(state.amount).from(state.from).to(state.to).convert();
+            console.log(state.result);
         },
         swapCurrencies: (state) => {
             const { from, to } = state;
+
             state.from = to;
             state.to = from;
+            state.result = converter.amount(state.amount).convert({ from: state.from, to: state.to });
         },
     },
     extraReducers: (builder) => {
@@ -37,6 +43,8 @@ const converterInfo = createSlice({
 
             Object.keys(payload).forEach((key) => state[key] = payload[key]);
             state.rates[base] = 1;
+
+            converter.setRates({ base, rates: state.rates });
         });
     },
 });
