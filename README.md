@@ -2,4 +2,4 @@
 
 _in developing_
 
-[Click here to try demo]()
+[Click here to try demo](https://money-converter.herokuapp.com/)
