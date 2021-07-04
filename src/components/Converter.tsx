@@ -8,7 +8,7 @@ import { actions as converterActions } from "../slices/converter";
 import reversePic from '../assets/reverse.png';
 
 const getOptionsForValuteSelect = (rates: IRates['rates']) => {
-    const valutes = Object.keys(rates);
+    const valutes = Object.keys(rates).sort();
 
     return valutes.map((valute) => <option key={valute}>{valute}</option>);
 };
