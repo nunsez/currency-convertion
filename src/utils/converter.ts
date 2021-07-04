@@ -23,7 +23,7 @@ class Converter {
         const { _amount, fromCurrency, toCurrency } = this;
         const { rates } = Converter;
 
-        const value = _amount.replaceAll(/[^0-9]/g, '');
+        const value = _amount.replaceAll(/[^0-9.]/g, '');
         const a = from ?? fromCurrency;
         const b = to ?? toCurrency;
 
