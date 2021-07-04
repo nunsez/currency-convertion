@@ -31,6 +31,8 @@ const ConverterForm = ({ base, rates, onChange, onSwap }: IProps) => {
                     <Form.Control
                         type="number"
                         name="amount"
+                        min={0}
+                        autoComplete="off"
                         value={values.amount}
                         onChange={onChange}
                     />
