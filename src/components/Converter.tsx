@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Form, Button, Image } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import * as selectors from '../selectors';
@@ -20,7 +20,7 @@ interface IProps {
     onSwap: () => void;
 }
 
-const ConverterForm = ({ base, rates, onChange, onSwap }: IProps) => {
+const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
     const values = useSelector(selectors.getConverterValues);
 
     return (
@@ -53,9 +53,7 @@ const ConverterForm = ({ base, rates, onChange, onSwap }: IProps) => {
                 <Button
                     type="button"
                     variant="outline-info"
-                    onClick={(e) => {
-                        onSwap();
-                    }}
+                    onClick={onSwap}
                     className="mt-auto"
                 >
                     <Image
