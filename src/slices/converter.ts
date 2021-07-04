@@ -26,7 +26,9 @@ const converterInfo = createSlice({
             const { name, value } = payload;
             state[name] = value;
 
-            state.result = converter.amount(state.amount).from(state.from).to(state.to).convert();
+            converter.amount(state.amount);
+
+            state.result = converter.convert(state);
         },
         swapCurrencies: (state) => {
             const { from, to } = state;
@@ -34,7 +36,10 @@ const converterInfo = createSlice({
             state.from = to;
             state.to = from;
             state.amount = state.result;
-            state.result = converter.amount(state.amount).convert({ from: state.from, to: state.to });
+
+            converter.amount(state.amount);
+
+            state.result = converter.convert(state);
         },
     },
     extraReducers: (builder) => {

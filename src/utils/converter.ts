@@ -38,9 +38,9 @@ class Converter {
     }
 
     to(currency: string) {
-        const { _amount, fromCurrency } = this;
+        this.toCurrency = currency;
 
-        return new Converter(_amount, fromCurrency, currency);
+        return this;
     }
 
     get result() {
@@ -48,16 +48,16 @@ class Converter {
     }
 
     from(currency: string) {
-        const { _amount, toCurrency } = this;
+        this.fromCurrency = currency;
 
-        return new Converter(_amount, currency, toCurrency );
+        return this;
     }
 
     amount(value: string | number ) {
-        const { fromCurrency, toCurrency } = this;
         const valueStr = typeof value === "number" ? String(value) : value;
+        this._amount = valueStr;
 
-        return new Converter(valueStr, fromCurrency, toCurrency );
+        return this;
     }
 }
 
