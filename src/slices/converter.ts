@@ -27,13 +27,13 @@ const converterInfo = createSlice({
             state[name] = value;
 
             state.result = converter.amount(state.amount).from(state.from).to(state.to).convert();
-            console.log(state.result);
         },
         swapCurrencies: (state) => {
             const { from, to } = state;
 
             state.from = to;
             state.to = from;
+            state.amount = state.result;
             state.result = converter.amount(state.amount).convert({ from: state.from, to: state.to });
         },
     },
