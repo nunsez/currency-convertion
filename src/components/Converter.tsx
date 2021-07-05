@@ -14,14 +14,13 @@ const getOptionsForValuteSelect = (rates: IRates['rates']) => {
 };
 
 interface IProps {
-    base: IConverter['base'];
-    rates: IConverter['rates'];
+    values: IConverter;
     onChange: (e: any) => void;
     onSwap: () => void;
 }
 
-const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
-    const values = useSelector(selectors.getConverterValues);
+const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
+    const { amount, from, to, result, rates } = values;
 
     return (
         <>
@@ -29,11 +28,10 @@ const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
                 <Form.Group className="mx-2 w-25">
                     <Form.Label>Amount</Form.Label>
                     <Form.Control
-                        type="number"
+                        type="text"
                         name="amount"
-                        min={0}
                         autoComplete="off"
-                        value={values.amount}
+                        value={amount}
                         onChange={onChange}
                     />
                 </Form.Group>
@@ -42,7 +40,7 @@ const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
                     <Form.Label>From</Form.Label>
                     <Form.Control
                         as="select"
-                        value={values.from}
+                        value={from}
                         onChange={onChange}
                         name="from"
                     >
@@ -50,26 +48,30 @@ const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
                     </Form.Control>
                 </Form.Group>
 
-                <Button
-                    type="button"
-                    variant="outline-info"
-                    onClick={onSwap}
-                    className="mt-auto"
-                >
-                    <Image
-                        src={reversePic}
-                        alt="reverse"
-                        width={20}
-                        height={20}
-                    />
-                </Button>
+                <Form.Group className="mx-2 ">
+                    <Form.Label hidden>Reverse</Form.Label>
+                    <Button
+                        type="button"
+                        variant="outline-info"
+                        onClick={onSwap}
+                        className="d-block"
+                        style={{marginTop: '2rem'}}
+                    >
+                        <Image
+                            src={reversePic}
+                            alt="reverse"
+                            width={20}
+                            height={20}
+                        />
+                    </Button>
+                </Form.Group>
 
                 <Form.Group className="mx-2 w-25">
                     <Form.Label>To</Form.Label>
                     <Form.Control
                         as="select"
                         name="to"
-                        value={values.to}
+                        value={to}
                         onChange={onChange}
                     >
                         {getOptionsForValuteSelect(rates)}
@@ -78,7 +80,7 @@ const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
             </Form>
 
             <div className="mt-5">
-                <p>{values.result !== '0' && `${values.amount} ${values.from} = ${values.result} ${values.to}`}</p>
+                <p>{result !== '0' && `${amount} ${from} = ${result} ${to}`}</p>
             </div>
         </>
     );
@@ -87,10 +89,11 @@ const ConverterForm = ({ rates, onChange, onSwap }: IProps) => {
 const Converter = () => {
     const dispatch = useDispatch();
 
-    const { rates, base } = useSelector(selectors.getConverterValues);
+    const values = useSelector(selectors.getConverterValues);
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
+
         dispatch(converterActions.setValue({ name, value }));
     };
 
@@ -105,7 +108,7 @@ const Converter = () => {
     return (
         <React.Fragment>
             <h1 className="text-center">Converter Page</h1>
-            <ConverterForm base={base} rates={rates} onChange={handleChange} onSwap={handleSwapCurrencies} />
+            <ConverterForm values={values} onChange={handleChange} onSwap={handleSwapCurrencies} />
         </React.Fragment>
     );
 };
