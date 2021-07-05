@@ -24,7 +24,21 @@ const converterInfo = createSlice({
     reducers: {
         setValue: (state, { payload }) => {
             const { name, value } = payload;
-            state[name] = value;
+            let result = value;
+
+            switch (name) {
+            case 'amount':
+                result = value.match(/\d*\.?\d*/)[0]; // match only digits with dot
+                result = result.replaceAll(/^0*(?<=.)/g, ''); // remove all zeros before dot
+                result = result.startsWith('.') || result === '' ? `0${result}` : result; // add one zero before dot
+
+                break;
+
+            default:
+                break;
+            }
+
+            state[name] = result;
 
             converter.amount(state.amount);
 
