@@ -23,11 +23,11 @@ class Converter {
         const { _amount, fromCurrency, toCurrency } = this;
         const { rates } = Converter;
 
-        const value = _amount.replaceAll(/[^0-9.]/g, '');
+        const value = Number.parseFloat(_amount);
         const a = from ?? fromCurrency;
         const b = to ?? toCurrency;
 
-        const result = (rates[b] / rates[a]) * Number(value);
+        const result = (rates[b] / rates[a]) * value;
 
         return this._result = result.toFixed(2);
     }
