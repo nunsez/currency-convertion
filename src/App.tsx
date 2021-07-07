@@ -1,11 +1,15 @@
 import React from 'react';
 import Header from './components/Header';
 import Main from './components/Main';
+import Footer from './components/Footer';
 
 const App = () => (
-    <div className="container w-50 min-vw-sm-100 mb-3 pb-1 bg-light">
-        <Header />
-        <Main />
+    <div className="container w-50 min-vw-sm-100">
+        <div className="d-flex flex-column vh-100 min-vh-100">
+            <Header />
+            <Main />
+            <Footer />
+        </div>
     </div>
 );
 

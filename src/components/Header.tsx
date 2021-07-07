@@ -3,7 +3,7 @@ import { Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Header = () => (
-    <Navbar sticky="top" bg="light" className="border-bottom border-2 border-secondary py-3 mb-4">
+    <Navbar sticky="top" bg="white" className="border-bottom border-2 border-secondary py-3 mb-4">
         <Navbar.Brand className="me-4">Navigation</Navbar.Brand>
 
         <Nav className="d-flex justify-content-center">
