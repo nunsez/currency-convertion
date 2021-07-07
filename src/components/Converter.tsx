@@ -24,7 +24,7 @@ const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
 
     return (
         <>
-            <Form noValidate className="d-flex justify-content-between">
+            <Form noValidate className="d-flex justify-content-between mt-3">
                 <Form.Group className="mx-2 w-25">
                     <Form.Label>Amount</Form.Label>
                     <Form.Control
@@ -107,7 +107,7 @@ const Converter = () => {
 
     return (
         <React.Fragment>
-            <h1 className="text-center mb-3">Converter Page</h1>
+            <h1 className="text-center mb-2">Converter Page</h1>
             <ConverterForm values={values} onChange={handleChange} onSwap={handleSwapCurrencies} />
         </React.Fragment>
     );
