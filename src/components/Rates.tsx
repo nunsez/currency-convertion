@@ -9,17 +9,14 @@ import * as selectors from '../selectors';
 
 const TableOfRates = ({ valutes }: { valutes: IDaily['Valute'] }) => {
     const keys = Object.keys(valutes);
+    const headerList = ['Код', 'Ед.', 'Валюта', 'Курс', 'Изм.'];
 
     return (
         <div className="d-flex flex-column">
             <Table striped>
                 <thead>
                     <tr>
-                        <th>Код</th>
-                        <th>Ед.</th>
-                        <th>Валюта</th>
-                        <th>Курс</th>
-                        <th>Изм.</th>
+                        {headerList.map((el) => <th key={el}>{el}</th>)}
                     </tr>
                 </thead>
                 <tbody>
