@@ -50,21 +50,13 @@ const Rates = () => {
 
     const date = new Date(timestamp);
 
-    const valutesList = Object.keys(valutes).concat('RUB').sort();
-
     useEffect(() => {
         dispatch(dailyActions.fetchDaily());
     }, []);
 
     return (
         <React.Fragment>
-            <h1>Rates Page</h1>
-            <label htmlFor="select">Select your base valute: </label>
-            <select id="select" defaultValue="RUB">
-                {valutesList.map((val) => {
-                    return <option key={val}>{val}</option>;
-                })}
-            </select>
+            <h1 className="text-center mb-3">Rates Page</h1>
             <p className="mt-2">Последнее обновление базы данных: {date.toLocaleString()}</p>
             <TableOfRates valutes={valutes} />
         </React.Fragment>
