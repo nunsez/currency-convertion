@@ -107,7 +107,7 @@ const Converter = () => {
 
     return (
         <React.Fragment>
-            <h1 className="text-center">Converter Page</h1>
+            <h1 className="text-center mb-3">Converter Page</h1>
             <ConverterForm values={values} onChange={handleChange} onSwap={handleSwapCurrencies} />
         </React.Fragment>
     );
