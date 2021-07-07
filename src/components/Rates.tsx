@@ -56,8 +56,8 @@ const Rates = () => {
 
     return (
         <React.Fragment>
-            <h1 className="text-center mb-3">Rates Page</h1>
-            <p className="mt-2">Последнее обновление базы данных: {date.toLocaleString()}</p>
+            <h1 className="text-center mb-2">Rates Page</h1>
+            <p className="text-center mb-3">Последнее обновление базы данных: {date.toLocaleString()}</p>
             <TableOfRates valutes={valutes} />
         </React.Fragment>
     );
