@@ -19,8 +19,17 @@ interface IProps {
     onSwap: () => void;
 }
 
+const getLocaleNumber = (value: string, currency: string) => {
+    const defaultLocale = 'en-US';
+    const locale = navigator.language;
+
+    return Number(value).toLocaleString([locale, defaultLocale], { currency })
+};
+
 const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
     const { amount, from, to, result, rates } = values;
+    const displayAmount = getLocaleNumber(amount, from);
+    const displayResult = getLocaleNumber(result, to);
 
     return (
         <>
@@ -79,8 +88,12 @@ const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
                 </Form.Group>
             </Form>
 
-            <div className="mt-5">
-                <p>{result !== '0' && `${amount} ${from} = ${result} ${to}`}</p>
+            <div className="ps-3 mt-5">
+                {result !== '0' &&
+                <>
+                <span className="d-block fs-5">{displayAmount} {from} =</span>
+                <span className="d-block fs-3">{displayResult} {to}</span>
+                </>}
             </div>
         </>
     );
