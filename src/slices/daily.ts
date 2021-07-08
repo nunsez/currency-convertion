@@ -16,6 +16,8 @@ const initialState: IDaily = {
     Valute: {},
 };
 
+type Keys = keyof IDaily;
+
 const dailySlice = createSlice({
     name: 'dailyInfo',
     initialState,
@@ -23,7 +25,7 @@ const dailySlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchDaily.fulfilled, (state, { payload }) => {
-            Object.keys(payload).forEach((key) => state[key] = payload[key]);
+            Object.entries(payload).forEach(([key, value]) => state[key as Keys] = value);
         })
     },
 });

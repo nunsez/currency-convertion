@@ -18,6 +18,8 @@ const initialState: IConverter = {
     rates: {},
 };
 
+type Keys = keyof IConverter;
+
 const converterInfo = createSlice({
     name: 'converterInfo',
     initialState,
@@ -38,7 +40,7 @@ const converterInfo = createSlice({
                 break;
             }
 
-            state[name] = result;
+            state[name as Keys] = result;
 
             converter.amount(state.amount);
 
@@ -60,7 +62,7 @@ const converterInfo = createSlice({
         builder.addCase(fetchRates.fulfilled, (state, { payload }) => {
             const { base } = payload;
 
-            Object.keys(payload).forEach((key) => state[key] = payload[key]);
+            Object.entries(payload).forEach(([key, value]) => state[key as Keys] = value);
             state.rates[base] = 1;
 
             converter.setRates({ base, rates: state.rates });

@@ -13,7 +13,6 @@ export interface IRates {
     rates: {
         [key: string]: number;
     };
-    [key: string]: string | IRates['rates'];
 }
 
 export interface IDaily {
@@ -24,7 +23,6 @@ export interface IDaily {
     Valute: {
         [key: string]: IValute;
     };
-    [key: string]: string | IDaily['Valute'];
 }
 
 export interface IConverter extends IRates {
