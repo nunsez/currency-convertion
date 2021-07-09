@@ -32,7 +32,7 @@ const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
     const displayResult = getLocaleNumber(result, to);
 
     return (
-        <>
+        <div className="converter-form mt-5 border border-2 border-gray rounded-3 bg-light py-3 px-3" style={{ minHeight: '13.5rem' }}>
             <Form noValidate className="d-flex justify-content-between mt-3">
                 <Form.Group className="mx-2 w-25">
                     <Form.Label>Amount</Form.Label>
@@ -88,14 +88,13 @@ const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
                 </Form.Group>
             </Form>
 
-            <div className="ps-3 mt-5">
-                {result !== '0' &&
-                <>
-                <span className="d-block fs-5">{displayAmount} {from} =</span>
-                <span className="d-block fs-3">{displayResult} {to}</span>
-                </>}
-            </div>
-        </>
+            {result !== '0' &&
+            <div className="ps-3 mt-4">
+            <span className="d-block fs-5">{displayAmount} {from} =</span>
+            <span className="d-block fs-3">{displayResult} {to}</span>
+            </div>}
+
+        </div>
     );
 };
 
@@ -119,10 +118,10 @@ const Converter = () => {
     }, []);
 
     return (
-        <React.Fragment>
+        <div className="">
             <h1 className="text-center mb-2">Converter Page</h1>
             <ConverterForm values={values} onChange={handleChange} onSwap={handleSwapCurrencies} />
-        </React.Fragment>
+        </div>
     );
 };
 
