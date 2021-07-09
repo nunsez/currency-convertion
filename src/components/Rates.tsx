@@ -52,11 +52,11 @@ const Rates = () => {
     }, []);
 
     return (
-        <React.Fragment>
+        <div style={{ minWidth: '25rem' }}>
             <h1 className="text-center mb-2">Rates Page</h1>
             <p className="text-center mb-3">Последнее обновление базы данных: {date.toLocaleString()}</p>
             <TableOfRates valutes={valutes} />
-        </React.Fragment>
+        </div>
     );
 };
 

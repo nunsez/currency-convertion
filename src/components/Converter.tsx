@@ -32,9 +32,9 @@ const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
     const displayResult = getLocaleNumber(result, to);
 
     return (
-        <div className="converter-form mt-5 border border-2 border-gray rounded-3 bg-light py-3 px-3" style={{ minHeight: '13.5rem' }}>
-            <Form noValidate className="d-flex justify-content-between mt-3">
-                <Form.Group className="mx-2 w-25">
+        <div className="d-flex flex-column mt-5 border border-2 border-gray rounded-3 bg-light p-3 justify-content-between">
+            <Form noValidate className="d-flex flex-wrap justify-content-between my-2">
+                <Form.Group className="m-2">
                     <Form.Label>Amount</Form.Label>
                     <Form.Control
                         type="text"
@@ -45,7 +45,7 @@ const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
                     />
                 </Form.Group>
 
-                <Form.Group className="mx-2 w-25">
+                <Form.Group className="m-2">
                     <Form.Label>From</Form.Label>
                     <Form.Control
                         as="select"
@@ -57,7 +57,7 @@ const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
                     </Form.Control>
                 </Form.Group>
 
-                <Form.Group className="mx-2 ">
+                <Form.Group className="m-2">
                     <Form.Label hidden>Reverse</Form.Label>
                     <Button
                         type="button"
@@ -75,7 +75,7 @@ const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
                     </Button>
                 </Form.Group>
 
-                <Form.Group className="mx-2 w-25">
+                <Form.Group className="m-2">
                     <Form.Label>To</Form.Label>
                     <Form.Control
                         as="select"
@@ -88,12 +88,13 @@ const ConverterForm = ({ values, onChange, onSwap }: IProps) => {
                 </Form.Group>
             </Form>
 
-            {result !== '0' &&
-            <div className="ps-3 mt-4">
-            <span className="d-block fs-5">{displayAmount} {from} =</span>
-            <span className="d-block fs-3">{displayResult} {to}</span>
-            </div>}
-
+            <div className="ps-3 mt-auto" style={{ minHeight: '4.5rem' }}>
+                {result !== '0' &&
+                <>
+                    <span className="d-block fs-5">{displayAmount} {from} =</span>
+                    <span className="d-block fs-3">{displayResult} {to}</span>
+                </>}
+            </div>
         </div>
     );
 };
