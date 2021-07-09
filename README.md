@@ -19,7 +19,7 @@ _in developing_
 ```sh
 git clone https://github.com/nunsez/currency-convertion.git
 cd currency-convertion/
-yarn
+yarn install
 ```
 
 #### Run locally
